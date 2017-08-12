@@ -9,10 +9,10 @@ main #message {
 
 main .available {
   height: 40px;
-  border-color: #5cb85c;
+  border-color: #2d672d;
   background-color: #5cb85c; }
 
 main .busy {
   height: 40px;
-  border-color: #d9534f;
+  border-color: #8b211e;
   background-color: #d9534f; }

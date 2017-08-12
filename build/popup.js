@@ -11,7 +11,7 @@ function successHandler(res) {
     stack: false,
     // start: new Date(),
     // end: new Date(7*24*60*60*1000 + (new Date()).valueOf()),
-    editable: true,
+    selectable: false,
     margin: {
       item: 10, // minimal margin between items
       axis: 5 // minimal margin between items and the axis

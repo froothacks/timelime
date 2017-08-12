@@ -12,12 +12,14 @@ main {
   }
   .available {
     height: 40px;
-    border-color: #5cb85c;
-    background-color: #5cb85c;
+    border-color: darken(#5cb85c, 25%);
+    background-color: #5cb85c
+    // background-color: transparentize(#5cb85c, 0.5);
   }
   .busy {
     height: 40px;
-    border-color: #d9534f;
-    background-color: #d9534f;
+    border-color: darken(#d9534f, 25%);
+    background-color: #d9534f
+    // background-color: transparentize(#d9534f, 0.5);
   }
 }
