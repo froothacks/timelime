@@ -8,7 +8,7 @@
     "persistent": false
   },
   "content_scripts": [
-    { "matches": ["http://*/*"], "js": ["scraper.js"] }
+    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.2.1.min.js", "scraper.js"] }
   ],
   "page_action": {
     "default_icon": "icon-64.png",
@@ -18,8 +18,8 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "tabs",
+    "tabs"
     "<all_urls>"
-    // "https://ajax.googleapis.com/"
+    // "http://127.0.0.1/*"
   ]
 }

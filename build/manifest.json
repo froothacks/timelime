@@ -7,19 +7,19 @@
     "scripts": ["background.js"],
     "persistent": false
   },
-  // "content_scripts": [
-  //   { "matches": ["http://*/*"], "js": ["scraper.js"] }
-  // ],
+  "content_scripts": [
+    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.2.1.min.js", "scraper.js"] }
+  ],
   "page_action": {
     "default_icon": "icon-64.png",
     "default_title": "Timelime",
     "default_popup": "popup.html"
   },
   "permissions": [
-    // "activeTab",
+    "activeTab",
     "declarativeContent",
-    "tabs",
-    "<all_urls>"
+    "tabs"
+    // "<all_urls>"
     // "https://ajax.googleapis.com/"
   ]
 }

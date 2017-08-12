@@ -2,29 +2,38 @@ const BLOCK_SELECTOR = "div._41ud"
 const USERNAME_SELECTOR = "h5._ih3"
 const MESSAGE_SELECTOR = "span._3oh-._58nk"
 
-document.querySelector('#message2').innerText = "scrapeding";
+console.log("2 scrapeding")
 
 function scrape() {
-	var messages = []
+  var messages = []
 
-	$(BLOCK_SELECTOR).each(function() {
-		username = $(this).find(USERNAME_SELECTOR).first().html()
-		blockMessages = $(this).find(MESSAGE_SELECTOR).each(function() {
-			message = $(this).html()
-			messages.push({
-				"username": username,
-				"message": message
-			})
-		})
-	})
+  console.log("3 scrapinged")
 
-	document.querySelector('#message3').innerText = "scrapinged";
+  $(BLOCK_SELECTOR).each(function() {
+    var username = $(this).find(USERNAME_SELECTOR).first().text()
+    var blockMessages = $(this).find(MESSAGE_SELECTOR).each(function() {
+      var message = $(this).text()
+      messages.push({
+        "username": username,
+        "message": message
+      })
+    })
+  })
 
-    return messages
+  console.log("3.5 scrapingeded")
+
+  return messages
 }
 
+window.onload = function() {
+  chrome.runtime.onMessage.addListener(function(req, _, sendResponse) {
+    console.log('onMessage', req)
+    if (req.action == "scrape") {
+      sendResponse({
+        action: "scrape",
+        messages: scrape()
+      })
+    }
+  })
+}
 
-chrome.runtime.sendMessage({
-	action: "scrape",
-	messages: scrape()
-})

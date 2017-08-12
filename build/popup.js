@@ -1,19 +1,17 @@
 "use strict";
 
-chrome.runtime.onMessage.addListener(function (request, sender) {
-  document.querySelector('#message4').innerText = "scrapedd";
-  if (request.action == "scrape") {
-    document.querySelector('#message').innerText = request.messages;
-  }
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  var tab = tabs[0];
+  console.log(tab.url, tab.title);
+  chrome.tabs.getSelected(null, function (tab) {
+    console.log("1 scrapin'");
+    chrome.tabs.sendMessage(tab.id, { action: "scrape" }, function (req) {
+      console.log(req);
+      if (req.action == "scrape") {
+        console.log('4 scrapeeddd');
+        console.log(req.messages);
+        document.querySelector("#message").innerText = req.messages;
+      }
+    });
+  });
 });
-
-// window.onload = function () {
-
-//   chrome.tabs.executeScript(null, { file: "scraper.js" }, function () {
-//     document.querySelector('#message1').innerText = "scrapin'";
-//     // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-//     if (chrome.runtime.lastError) {
-//       document.querySelector('#message').innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
-//     }
-//   });
-// };
