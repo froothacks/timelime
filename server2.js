@@ -25,11 +25,12 @@ app.post('/post/data', function(req, res) {
     console.log("\n");
     var data = req.body["messages"];
     var full_response = {"availability":[]}
-    var response = {};
+    var response = {"availability":[]};
+    var userDict = {};
     for (var i = 0; i < data.length; i++) {
         var parse_results = chrono.parse(data[i]["message"]);
         var user_name = data[i]["username"];
-        var temp_user_avalibility = [];
+        // var temp_user_avalibility = [];
         for (var j = 0; j < parse_results.length; j++) {
             var d = parse_results[j].start.knownValues;
             var y = parse_results[j].start.impliedValues;
@@ -54,20 +55,41 @@ app.post('/post/data', function(req, res) {
             }
             // console.log("Start", startTime);
             // console.log("End", endTime);
-            temp_user_avalibility.push({"start":startTime, "end":endTime});
+
+            // temp_user_avalibility.push({"start":startTime, "end":endTime});
+           
+            
             var message_body = data[i]["message"];
             if (sentiment(message_body,overrides)["score"] < 0) {
+            	var boolAvailable = "false";
                 // console.log("negative");
             } else {
+            	var boolAvailable = "true";
                 // console.log("positive");
-            }}
-        response["username"] = user_name;
-        response["times"] = temp_user_avalibility;
+            }
+            if (userDict[user_name] === undefined){
+            	userDict[user_name] = [{"available":boolAvailable, "start":startTime, "end":endTime}];
+            }
+            else {
+            	userDict[user_name].push({"available":boolAvailable, "start":startTime, "end":endTime});
+            }
+        }
+
+        // response["username"] = user_name;
+        // response["times"] = temp_user_avalibility;
+        console.log("d");
+        console.log(userDict);
         console.log(response);
-        full_response["availability"].push(response)
-        console.log(full_response);
+        // full_response["availability"].push(response)
+        // console.log(full_response);
 
     }
+    var userKeys = Object.keys(userDict);
+    for (var usernamei = 0; usernamei < userKeys.length; usernamei++){
+    	response["availability"].push({"username":userKeys[usernamei], "times":userDict[userKeys[usernamei]]});
+    }
+    console.log(response);
+    res.send(response);
 });
 
 // start the server
