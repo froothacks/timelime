@@ -1,9 +1,9 @@
 var csv = require('csv-parser')
 var fs = require('fs')
-var x = -79.7592242 //LONG
-var y = 43.6850141 //LATT
+shop_finder: function(x,y){
+// var x = -79.7592242 //LONG
+// var y = 43.6850141 //LATT
 var closest_location = [];
-
 var shortest_distance = Infinity;
 fs.createReadStream('business-directory.csv')
     .pipe(csv())
@@ -23,4 +23,4 @@ fs.createReadStream('business-directory.csv')
             closest_location.push((data.BUSINESS_FULL_ADDRESS +" "+ data.CITY +" "+data.PROVINCE+" "+ data.POSTAL_CODE))
             console.log(closest_location)
         }
-    })
+    })}
