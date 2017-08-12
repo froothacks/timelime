@@ -1,3 +1,5 @@
+process.env.TZ = 'Eastern Daylight Time'
+
 const express = require('express');
 // console.log(WtoN.parse("five"));
 // console.log(WtoN.parse("today at five"));
