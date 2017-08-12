@@ -2,10 +2,15 @@ doctype html
 html
   head
     title Timelime
+
+    script(src="vis-4.20.1.min.js")
+    link(href="vis-4.20.1.min.css" rel="stylesheet" type="text/css")
     link(href="popup.css" rel="stylesheet" type="text/css")
 
   body
-    main#main Loading...
+    main
+      #timeline
+      #message
 
     script(src="jquery-3.2.1.min.js")
     script(src="popup.js")

@@ -31,7 +31,6 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "chrono-node": "^1.3.5",
-    "cors": "^2.8.4",
     "express": "^4.15.4",
     "sentiment": "^4.0.0"
   }

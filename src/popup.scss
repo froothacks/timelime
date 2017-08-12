@@ -1,9 +1,23 @@
 body {
+  width: 600px;
+  height: 300px;
+
   margin: 0px;
   padding: 10px;
 }
 
 main {
-  width: 360px;
-  height: 240px;
+  #message {
+    background-color: #eeeeee;
+  }
+  .available {
+    height: 40px;
+    border-color: #5cb85c;
+    background-color: #5cb85c;
+  }
+  .busy {
+    height: 40px;
+    border-color: #d9534f;
+    background-color: #d9534f;
+  }
 }
