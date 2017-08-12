@@ -141,14 +141,21 @@ app.post('/post/data', function(req, res) {
     }
 
     var userKeys = Object.keys(userDict);
+    var newrep = {"data": [], "groups": []};
+    var counter = 0;
+    console.log(userDict);
     for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-        response["availability"].push({
-            "username": userKeys[usernamei],
-            "times": userDict[userKeys[usernamei]]
-        });
+    	newrep["groups"].push({"id":usernamei, "content":userKeys[usernamei]})
+    	for (var rangei = 0; rangei < userDict[userKeys[usernamei]].length; rangei++){
+    		console.log(rangei);
+    		console.log(userKeys[usernamei]);
+    		var curSet = userDict[userKeys[usernamei]][rangei];
+    		newrep["data"].push({"id":counter, content:"", "start":String(curSet["start"]), "end":String(curSet["end"]), "group":usernamei, "className":((curSet["available"] == "true") ? "available":"busy")});
+    		counter++;
+    	}
     }
-    console.log(response);
-    res.send(response);
+    console.log(newrep);
+    res.send(newrep);
 });
 
 // start the server
