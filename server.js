@@ -1,4 +1,8 @@
 const express = require('express');
+// console.log(WtoN.parse("five"));
+// console.log(WtoN.parse("today at five"));
+// console.log(WtoN.parse("three to five"));
+// console.log(WtoN.parse("today from three to five"));
 const bodyParser = require('body-parser');
 const chrono = require('chrono-node');
 const sentiment = require('sentiment')
@@ -8,6 +12,53 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json())
+
+const NAME_TO_NUMBER = {
+    "zero": "0",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+    "ten": "10",
+    "eleven": "11",
+    "twelve": "12",
+    "thirteen": "13",
+    "fourteen": "14",
+    "fifteen": "15",
+    "sixteen": "16",
+    "seventeen": "17",
+    "eighteen": "18",
+    "nineteen": "19",
+    "twenty": "20",
+    "twenty one": "21",
+    "twenty two": "22",
+    "twenty three": "23",
+    "twenty four": "24",
+    "twenty five": "25",
+    "twenty six": "26",
+    "twenty seven": "27",
+    "twenty eight": "28",
+    "twenty nine": "29",
+    "thirty": "30",
+    "thirty one": "31",
+    "twenty-one": "21",
+    "twenty-two": "22",
+    "twenty-three": "23",
+    "twenty-four": "24",
+    "twenty-five": "25",
+    "twenty-six": "26",
+    "twenty-seven": "27",
+    "twenty-eight": "28",
+    "twenty-nine": "29",
+    "thirty-one": "31"
+
+
+}
 
 const PORT = 9000;
 const OVERRIDES = {
@@ -24,11 +75,22 @@ app.post('/post/data', function(req, res) {
     console.log('receiving data...');
     var data = JSON.parse(req.body["messages"]);
 
-    var response = {"availability":[]};
+    var response = {
+        "availability": []
+    };
     var userDict = {};
 
     for (var i = 0; i < data.length; i++) {
-        var parse_results = chrono.parse(data[i]["message"]);
+        var message = data[i]["message"].toLowerCase();
+
+        var words_list = data[i]["message"].split(" ");
+        console.log(message.toLowerCase());
+        for (var j = 0; j < words_list.length; j++) {
+            if (Object.keys(NAME_TO_NUMBER).indexOf(words_list[j])!==-1) {
+                message = message.replace(words_list[j], NAME_TO_NUMBER[words_list[j]])
+            }
+        }
+        var parse_results = chrono.parse(message);
         var user_name = data[i]["username"];
         for (var j = 0; j < parse_results.length; j++) {
             var date_dictionary = parse_results[j].start.knownValues;
@@ -47,24 +109,29 @@ app.post('/post/data', function(req, res) {
                     d[_keys[iter]] = y[_keys[iter]];
                 }
                 endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
-            } 
-            else {
+            } else {
                 endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4 + 1, date_dictionary.minute, date_dictionary.second);
             }
 
             var boolAvailable;
             var message_body = data[i]["message"];
             if (sentiment(message_body, OVERRIDES)["score"] < 0) {
-            	boolAvailable = "false";
-            }
-            else {
-            	 boolAvailable = "true";
+                boolAvailable = "false";
+            } else {
+                boolAvailable = "true";
             }
             if (userDict[user_name] === undefined) {
-            	userDict[user_name] = [{"available":boolAvailable, "start":startTime, "end":endTime}];
-            }
-            else {
-            	userDict[user_name].push({"available":boolAvailable, "start":startTime, "end":endTime});
+                userDict[user_name] = [{
+                    "available": boolAvailable,
+                    "start": startTime,
+                    "end": endTime
+                }];
+            } else {
+                userDict[user_name].push({
+                    "available": boolAvailable,
+                    "start": startTime,
+                    "end": endTime
+                });
             }
         }
 
@@ -72,10 +139,13 @@ app.post('/post/data', function(req, res) {
         console.log(userDict);
         console.log(response);
     }
-    
+
     var userKeys = Object.keys(userDict);
     for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-    	response["availability"].push({"username":userKeys[usernamei], "times":userDict[userKeys[usernamei]]});
+        response["availability"].push({
+            "username": userKeys[usernamei],
+            "times": userDict[userKeys[usernamei]]
+        });
     }
     console.log(response);
     res.send(response);
