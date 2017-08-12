@@ -22,23 +22,27 @@ const OVERRIDES = {
 
 app.post('/post/data', function(req, res) {
     console.log('receiving data...');
-    console.log(JSON.stringify(req.body));
+    // console.log(JSON.stringify(req.body));
     var bod = req.body;
-    var data = {"messages":[]};
-    var dataKeys = Object.keys(bod);
+    console.log(bod);
+    var dkeys = Object.keys(bod);
+    console.log(dkeys);
+    var data = JSON.parse(dkeys[0]);
+    // var data = {"messages":[]};
+    // var dataKeys = Object.keys(bod);
 
-    var results = (dataKeys.length-2)/2;
-    console.log(results);
-    for (var i = 0; i < results; i += 1) {
-    	console.log(i);
-    	console.log(data);
-    	var temp = {"username":bod["messages[" + i + "][username]"], "message": bod["messages[" + i + "][message]"]};
-    	data["messages"].push(temp);
-    	console.log(data);
-    }
-    console.log(data);
-    // "messages[0]['username']"
-    console.log(req.body["messages"]);
+    // var results = (dataKeys.length-2)/2;
+    // console.log(results);
+    // for (var i = 0; i < results; i += 1) {
+    // 	console.log(i);
+    // 	console.log(data);
+    // 	var temp = {"username":bod["messages[" + i + "][username]"], "message": bod["messages[" + i + "][message]"]};
+    // 	data["messages"].push(temp);
+    // 	console.log(data);
+    // }
+    // console.log(data);
+    // // "messages[0]['username']"
+    // console.log(req.body["messages"]);
     var response = {"availability":[]};
     var userDict = {};
     var data = data["messages"];
