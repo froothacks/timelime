@@ -1,0 +1,22 @@
+{
+  "name": "timelime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ethguo@github.com/jammyjammyhacks/timelime.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jammyjammyhacks/timelime/issues"
+  },
+  "homepage": "https://github.com/jammyjammyhacks/timelime#readme",
+  "dependencies": {
+    "parse-human-date-range": "^1.0.0"
+  }
+}
