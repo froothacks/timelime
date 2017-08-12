@@ -1,5 +1,11 @@
 .idea
 
+### Python
+# Byte-compiled/optimized/DLL files
+__pycache__/
+*.py[cdo]
+*$py.class
+
 ### Node
 # Logs
 logs
