@@ -1,7 +1,8 @@
 "use strict";
 
 function successHandler(res) {
-  $("#message", res.toString());
+  console.log(res);
+  $("#main").text(JSON.stringify(res));
 }
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -10,8 +11,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   chrome.tabs.getSelected(null, function (tab) {
     chrome.tabs.sendMessage(tab.id, { action: "scrape" }, function (req) {
       if (req.action == "scrape") {
-        $("#message").text(req.messages.length);
-        $.post("127.0.0.1", { "messages": messages }, successHandler);
+        $("#main").text(req.messages.length);
+        $.post("127.0.0.1:9000/post/data", { "messages": req.messages }, successHandler);
       }
     });
   });
