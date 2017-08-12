@@ -35,8 +35,9 @@ app.post('/post/data', function(req, res) {
         }
         var parse_results = chrono.parse(message_body);
         for (var j = 0; j < parse_results.length; j++) {
-            console.log("Start", parse_results[j].start)
-            console.log("End", parse_results[j].end)
+            // console.log("Start", parse_results[j].start)
+            // console.log("End", parse_results[j].end)
+            console.log(parse_results[j].start["impliedValues"].push(parse_results[j].start["knownValues"]));
         }
     }
 });
