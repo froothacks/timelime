@@ -12,7 +12,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tab.id, { action: "scrape" }, function (req) {
       if (req.action == "scrape") {
         $("#main").text(req.messages.length);
-        $.post("127.0.0.1:9000/post/data", { "messages": req.messages }, successHandler);
+        $.post("http://127.0.0.1:9000/post/data", { "messages": req.messages }, successHandler);
       }
     });
   });
