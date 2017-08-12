@@ -26,7 +26,6 @@ app.post('/post/data', function(req, res) {
     console.log("\n")
     var data = req.body["messages"];
     for (var i = 0; i < data.length; i++) {
-<<<<<<< HEAD
         var parse_results = chrono.parse(data[i]["message"]);
         for (var j = 0; j < parse_results.length; j++) {        	
         	var d = res[j].start.knownValues;
@@ -55,7 +54,6 @@ app.post('/post/data', function(req, res) {
         	console.log("Start", startTime);
         	console.log("End", endTime);
 
-=======
         var message_body = data[i]["message"];
         if (sentiment(message_body,overrides)<0){
         	console.log("negative");
@@ -65,18 +63,14 @@ app.post('/post/data', function(req, res) {
         }
         var parse_results = chrono.parse(message_body);
         for (var j = 0; j < parse_results.length; j++) {
-<<<<<<< HEAD
             console.log("Start", parse_results[j].start)
             console.log("End", parse_results[j].end)
->>>>>>> origin/master
-=======
             // console.log("Start", parse_results[j].start)
             // console.log("End", parse_results[j].end)
             console.log(parse_results[j].start["impliedValues"].push(parse_results[j].start["knownValues"]));
->>>>>>> origin/master
         }
     }
-});
+};
 
 // start the server
 app.listen(port);
