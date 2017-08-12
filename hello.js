@@ -9,8 +9,8 @@ console.log(parse('last 2 days'));
 var chrono = require('chrono-node');
 console.log(chrono.parse('An appointment on Sep 12-13')) ;
 //An appointment on 5 pm Sep 12 to 3 pm Sep 13
-var res = chrono.parse('An appointment on Sep 12-13');
-console.log(res);
+var res = chrono.parse("I'm available after 8 pm");
+console.log(res);s
 console.log(res[0].start.knownValues);
 console.log(chrono.parse(res[0].start.knownValues));
 var d = res[0].start.knownValues;
