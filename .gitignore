@@ -1,21 +1,10 @@
-.idea
-
-### Python
-# Byte-compiled/optimized/DLL files
-__pycache__/
-*.py[cdo]
-*$py.class
-
-### Node
-# Logs
-logs
-*.log
-npm-debug.log*
-node_modules/
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+node_modules
+temp
+.tmp
+dist
+.sass-cache
+app/bower_components
+test/bower_components
+package
+app/scripts
 
