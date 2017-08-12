@@ -22,11 +22,12 @@ var overrides = {
 
 app.post('/post/data', function(req, res) {
     console.log('receiving data...');
-    console.log('body is ', req.body);
     console.log("\n")
     var data = req.body["messages"];
+    var response = {}
     for (var i = 0; i < data.length; i++) {
         var parse_results = chrono.parse(data[i]["message"]);
+        var user_name = data[i]["username"];
         for (var j = 0; j < parse_results.length; j++) {
             var d = parse_results[j].start.knownValues;
             var y = parse_results[j].start.impliedValues;
@@ -34,8 +35,6 @@ app.post('/post/data', function(req, res) {
             for (var ite = 0; ite < keys.length; ite++) {
                 d[keys[ite]] = y[keys[ite]];
             }
-            // d.push(parse_results[j].start.impliedValues);
-            // var y = parse_results[j].start.impliedValues;
             var startTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
             if (parse_results[j].end != undefined) {
             	console.log(parse_results[j].end);
@@ -50,7 +49,6 @@ app.post('/post/data', function(req, res) {
             else 
             {
                 var endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4 + 1, d.minute, d.second);
-                console.log("ello");
             }
 
 
@@ -58,19 +56,13 @@ app.post('/post/data', function(req, res) {
             console.log("End", endTime);
 
             var message_body = data[i]["message"];
-            if (sentiment(message_body, overrides) < 0) {
+            if (sentiment(message_body,overrides)["score"] < 0) {
                 console.log("negative");
             } else {
                 console.log("positive");
             }
-            var parse_results = chrono.parse(message_body);
-            // for (var j = 0; j < parse_results.length; j++) {
-            //     // console.log("Start", parse_results[j].start)
-            //     // console.log("End", parse_results[j].end)
-            //         // console.log("Start", parse_results[j].start)
-            //         // console.log("End", parse_results[j].end)
-            //     // console.log(parse_results[j].start["impliedValues"].push(parse_results[j].start["knownValues"]));
-            // }
+            
+
         }
     }
 });
