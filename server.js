@@ -3,19 +3,17 @@ const http = require('http');
 const hostname = '127.0.0.1';
 const port = 3000;
 
+const JSON_example = `cars": {"car1":"Ford","car2":"BMW","car3":"Fiat"}`
+
+
 const server = http.createServer((request, response) => {
 	console.log(request.method);
-    if (request.method == "GET") {
-    	console.log("In Get");
-        response.statusCode = 200;
-        response.setHeader('Content-Type', 'text/plain');
-        response.end('Hello World\n');
-    } else {
-        var chrono = require('chrono-node');
-        var res = chrono.parse('I am free today after 10:00');
+	const {body} = request;
+	if (request.method == "POST"){
+		console.log(request.body)
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
-        response.end(res);
+        response.end(JSON_example);
     }
 
 });
