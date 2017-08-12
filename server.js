@@ -1,3 +1,5 @@
+process.env.TZ = 'Eastern Daylight Time'
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const chrono = require('chrono-node');
