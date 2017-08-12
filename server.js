@@ -15,7 +15,7 @@ const server = http.createServer((request, response) => {
         }).on('end', function() {
             console.log("HERE", body);
         });
-        console.log(request.body)
+        console.log(request.body);
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON_example);
