@@ -1,3 +1,4 @@
+### Node
 node_modules
 temp
 .tmp
@@ -8,5 +9,3 @@ test/bower_components
 package
 app/scripts
 .idea
-
-try.py
