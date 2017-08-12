@@ -18,9 +18,32 @@ app.post('/post/data', function(req, res) {
     var data = req.body["messages"];
     for (var i = 0; i < data.length; i++) {
         var parse_results = chrono.parse(data[i]["message"]);
-        for (var j = 0; j < parse_results.length; j++) {
-        	console.log("Start", parse_results[j].start)
-        	console.log("End", parse_results[j].end)
+        for (var j = 0; j < parse_results.length; j++) {        	
+        	var d = res[j].start.knownValues;
+        	var y = res[j].start.impliedValues;
+        	var keys = Object.keys(res[j].start.impliedValues);
+        	for (var ite = 0; ite < keys.length; ite++){
+        		d[keys[ite]] = y[keys[ite]];
+        	}
+        	// d.push(res[j].start.impliedValues);
+        	// var y = res[j].start.impliedValues;
+        	var startTime = new Date(d.year,  d.month, d.day, d.hour, d.minute, d.second);
+        	if (parse_results[j].end != undefined){
+        		var d = res[j].end.knownValues;
+        		var y = res[j].end.impliedValues;
+	        	var keys = Object.keys(res[j].end.impliedValues);
+	        	for (var ite = 0; ite < keys.length; ite++){
+	        		d[keys[ite]] = y[keys[ite]];
+	        	}
+        		var endTime = new Date(d.year, d.month, d.day, d.hour, d.minute, d.second);
+        	}
+        	else {
+        		var endTime = new Date(d.year, d.month, d.day, d.hour + 1, d.minute, d.second);
+        	}
+
+
+        	console.log("Start", startTime);
+        	console.log("End", endTime);
 
         }
 

@@ -7,12 +7,21 @@ console.log(a);
 console.log(parse('last 2 days'));
 
 var chrono = require('chrono-node');
-console.log(chrono.parseDate('An appointment on Sep 12-13')) ;
+console.log(chrono.parse('An appointment on Sep 12-13')) ;
 //An appointment on 5 pm Sep 12 to 3 pm Sep 13
-var res = chrono.parse('I am free today from 9:00 to 10:00 and from 12:00 to 5');
+var res = chrono.parse('An appointment on Sep 12-13');
 console.log(res);
 console.log(res[0].start.knownValues);
-console.log(chrono.parseDate(res[0].start.knownValues));
+console.log(chrono.parse(res[0].start.knownValues));
 var d = res[0].start.knownValues;
+var y = res[0].start.impliedValues;
+console.log(d);
+console.log(y);
+console.log(d.year, d.month, d.day, d.hour, d.minute, d.second);
+var d = res[0].end.knownValues;
+var y = res[0].end.impliedValues;
+console.log(d);
+console.log(y);
 console.log(new Date(d.year, d.month, d.day, d.hour, d.minute, d.second));
+// console.log(new Date(2017, 5, 5, 5, 0, 0));
 console.log(res[0].end) ;
