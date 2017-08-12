@@ -1,16 +1,16 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var chrono = require('chrono-node');
-var sentiment = require('sentiment')
+const express = require('express');
+const bodyParser = require('body-parser');
+const chrono = require('chrono-node');
+const sentiment = require('sentiment')
 
-var app = express();
+const app = express();
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json())
 
-var port = 9000;
-var overrides = {
+const PORT = 9000;
+const OVERRIDES = {
     "can't": -4,
     "can": 2,
     "unavailable": -4,
@@ -46,16 +46,16 @@ app.post('/post/data', function(req, res) {
                 }
                 endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
             } 
-            else 
-            {
+            else {
                 endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4 + 1, date_dictionary.minute, date_dictionary.second);
             }
 
             var boolAvailable;
             var message_body = data[i]["message"];
-            if (sentiment(message_body,overrides)["score"] < 0) {
+            if (sentiment(message_body, OVERRIDES)["score"] < 0) {
             	boolAvailable = "false";
-            } else {
+            }
+            else {
             	 boolAvailable = "true";
             }
             if (userDict[user_name] === undefined){
@@ -80,5 +80,5 @@ app.post('/post/data', function(req, res) {
 });
 
 // start the server
-app.listen(port);
-console.log('Server started! At http://localhost:' + port);
+app.listen(PORT);
+console.log('Server started! At http://127.0.0.1:' + PORT);
