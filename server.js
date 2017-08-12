@@ -99,7 +99,7 @@ app.post('/post/data', function(req, res) {
             for (var ite = 0; ite < keys.length; ite++) {
                 date_dictionary[keys[ite]] = date_dictionary_i[keys[ite]];
             }
-            var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4, date_dictionary.minute, date_dictionary.second);
+            var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour, date_dictionary.minute, date_dictionary.second);
             var endTime;
             if (parse_results[j].end != undefined) {
                 var d = parse_results[j].end.knownValues;
@@ -108,9 +108,9 @@ app.post('/post/data', function(req, res) {
                 for (var iter = 0; iter < _keys.length; iter++) {
                     d[_keys[iter]] = y[_keys[iter]];
                 }
-                endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
+                endTime = new Date(d.year, d.month - 1, d.day, d.hour, d.minute, d.second);
             } else {
-                endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4 + 1, date_dictionary.minute, date_dictionary.second);
+                endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour + 1, date_dictionary.minute, date_dictionary.second);
             }
 
             var boolAvailable;
