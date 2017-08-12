@@ -58,7 +58,7 @@ app.post('/post/data', function(req, res) {
             else {
             	 boolAvailable = "true";
             }
-            if (userDict[user_name] === undefined){
+            if (userDict[user_name] === undefined) {
             	userDict[user_name] = [{"available":boolAvailable, "start":startTime, "end":endTime}];
             }
             else {
@@ -72,7 +72,7 @@ app.post('/post/data', function(req, res) {
 
     }
     var userKeys = Object.keys(userDict);
-    for (var usernamei = 0; usernamei < userKeys.length; usernamei++){
+    for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
     	response["availability"].push({"username":userKeys[usernamei], "times":userDict[userKeys[usernamei]]});
     }
     console.log(response);
