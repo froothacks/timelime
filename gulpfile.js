@@ -124,7 +124,7 @@ gulp.task("watch", function() {
   gulp.watch(paths.src.pug, gulp.task("pug"));
   gulp.watch(paths.src.babel, gulp.task("babel"));
   gulp.watch(paths.src.sass, gulp.task("sass"));
-  // gulp.watch(paths.src.static, ["static"]);
+  gulp.watch(paths.src.static, gulp.task("static"));
 });
 
 gulp.task("sync", function() {

@@ -18,8 +18,8 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "tabs"
-    // "<all_urls>"
-    // "https://ajax.googleapis.com/"
+    "tabs",
+    "<all_urls>",
+    "http://127.0.0.1/*"
   ]
 }

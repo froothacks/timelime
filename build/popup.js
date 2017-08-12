@@ -1,10 +1,15 @@
 "use strict";
 
 function successHandler(res) {
+<<<<<<< HEAD
   alert("in");
   console.log("in");
   $("#message", res.toString());
   console.log(res);
+=======
+  console.log(res);
+  $("#main").text(JSON.stringify(res));
+>>>>>>> origin/master
 }
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -17,6 +22,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tab.id, { action: "scrape" }, function (req) {
       // alert(req.action);
       if (req.action == "scrape") {
+<<<<<<< HEAD
         $("#message").text(req.messages.length);
         alert("byyy");
         // alert(JSON.stringify(messages));
@@ -34,6 +40,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         });
 
         // $.post("127.0.0.1", { "messages": messages }, successHandler);
+=======
+        $("#main").text(req.messages.length);
+        $.post("127.0.0.1:9000/post/data", { "messages": req.messages }, successHandler);
+>>>>>>> origin/master
       }
     });
   });
