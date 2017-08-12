@@ -22,12 +22,14 @@ var overrides = {
 
 app.post('/post/data', function(req, res) {
     console.log('receiving data...');
-    console.log("\n")
+    console.log("\n");
     var data = req.body["messages"];
-    var response = {}
+    var full_response = {"availability":[]}
+    var response = {};
     for (var i = 0; i < data.length; i++) {
         var parse_results = chrono.parse(data[i]["message"]);
         var user_name = data[i]["username"];
+        var temp_user_avalibility = [];
         for (var j = 0; j < parse_results.length; j++) {
             var d = parse_results[j].start.knownValues;
             var y = parse_results[j].start.impliedValues;
@@ -37,7 +39,7 @@ app.post('/post/data', function(req, res) {
             }
             var startTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
             if (parse_results[j].end != undefined) {
-            	console.log(parse_results[j].end);
+            	// console.log(parse_results[j].end);
                 var d = parse_results[j].end.knownValues;
                 var y = parse_results[j].end.impliedValues;
                 var keys = Object.keys(parse_results[j].end.impliedValues);
@@ -50,20 +52,21 @@ app.post('/post/data', function(req, res) {
             {
                 var endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4 + 1, d.minute, d.second);
             }
-
-
-            console.log("Start", startTime);
-            console.log("End", endTime);
-
+            // console.log("Start", startTime);
+            // console.log("End", endTime);
+            temp_user_avalibility.push({"start":startTime, "end":endTime});
             var message_body = data[i]["message"];
             if (sentiment(message_body,overrides)["score"] < 0) {
-                console.log("negative");
+                // console.log("negative");
             } else {
-                console.log("positive");
-            }
-            
+                // console.log("positive");
+            }}
+        response["username"] = user_name;
+        response["times"] = temp_user_avalibility;
+        console.log(response);
+        full_response["availability"].push(response)
+        console.log(full_response);
 
-        }
     }
 });
 
