@@ -1,10 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const chrono = require('chrono-node');
-const sentiment = require('sentiment');
-// const cors = require('cors');
+const sentiment = require('sentiment')
+
 const app = express();
-// app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
