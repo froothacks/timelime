@@ -6,7 +6,7 @@ const chrono = require('chrono-node');
 const sentiment = require('sentiment')
 
 const app = express();
-shop_finder: function(long, lat) {
+function shop_finder(long, lat) {
     // var x = -79.7592242 //LONG
     // var y = 43.6850141 //LATT
     var closest_location = [];
@@ -26,7 +26,7 @@ shop_finder: function(long, lat) {
                 closest_location.push((data.BUSINESS_FULL_ADDRESS + " " + data.CITY + " " + data.PROVINCE + " " + data.POSTAL_CODE))
                 
             }
-        })
+        });
         return closest_location;
 }
 
@@ -78,8 +78,6 @@ const NAME_TO_NUMBER = {
     "twenty-eight": "28",
     "twenty-nine": "29",
     "thirty-one": "31"
-
-
 }
 
 const PORT = 9000;
@@ -244,6 +242,6 @@ app.post('/post/location', function(req, res) {
             var lat = req.body["lat"]
             var long = req.body["long"]
             res.send(shop_finder())
-        }
+        });
         // start the server
         app.listen(PORT); console.log('Server started! At http://127.0.0.1:' + PORT);
