@@ -30,7 +30,7 @@ app.post('/post/data', function(req, res) {
 
     var results = (dataKeys.length-2)/2;
     console.log(results);
-    for (var i = 0; i < results; i += 1) {
+    for (var i = 0; i <= results; i += 1) {
     	console.log(i);
     	console.log(data);
     	var temp = {"username":bod["messages[" + i + "][username]"], "message": bod["messages[" + i + "][message]"]};
@@ -94,6 +94,9 @@ app.post('/post/data', function(req, res) {
     	response["availability"].push({"username":userKeys[usernamei], "times":userDict[userKeys[usernamei]]});
     }
     console.log(response);
+    for (var i = 0; i < response.length; i++){
+    	console.log(response[i]["times"]);
+    }
     res.send(response);
 });
 
