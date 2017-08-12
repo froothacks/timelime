@@ -1,13 +1,33 @@
 const express = require('express');
-// console.log(WtoN.parse("five"));
-// console.log(WtoN.parse("today at five"));
-// console.log(WtoN.parse("three to five"));
-// console.log(WtoN.parse("today from three to five"));
 const bodyParser = require('body-parser');
 const chrono = require('chrono-node');
 const sentiment = require('sentiment')
 
 const app = express();
+shop_finder: function(long, lat) {
+    // var x = -79.7592242 //LONG
+    // var y = 43.6850141 //LATT
+    var closest_location = [];
+    var shortest_distance = Infinity;
+    fs.createReadStream('business-directory.csv')
+        .pipe(csv())
+        .on('data', function(data) {
+            var a = long - parseFloat(data.X)
+            var b = lat - parseFloat(data.Y)
+            var c = Math.sqrt(a * a + b * b);
+            if (data.PRODUCT_DESC.toLowerCase().indexOf("coffee") !== -1 && c < shortest_distance) {
+                closest_location = [];
+                shortest_distance = c;
+                console.log(shortest_distance)
+                closest_location.push(data.COMPANY_NAME)
+                closest_location.push(data.PRODUCT_DESC)
+                closest_location.push((data.BUSINESS_FULL_ADDRESS + " " + data.CITY + " " + data.PROVINCE + " " + data.POSTAL_CODE))
+                
+            }
+        })
+        return closest_location;
+}
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -86,7 +106,7 @@ app.post('/post/data', function(req, res) {
         var words_list = data[i]["message"].split(" ");
         console.log(message.toLowerCase());
         for (var j = 0; j < words_list.length; j++) {
-            if (Object.keys(NAME_TO_NUMBER).indexOf(words_list[j])!==-1) {
+            if (Object.keys(NAME_TO_NUMBER).indexOf(words_list[j]) !== -1) {
                 message = message.replace(words_list[j], NAME_TO_NUMBER[words_list[j]])
             }
         }
@@ -99,7 +119,7 @@ app.post('/post/data', function(req, res) {
             for (var ite = 0; ite < keys.length; ite++) {
                 date_dictionary[keys[ite]] = date_dictionary_i[keys[ite]];
             }
-            var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour, date_dictionary.minute, date_dictionary.second);
+            var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4, date_dictionary.minute, date_dictionary.second);
             var endTime;
             if (parse_results[j].end != undefined) {
                 var d = parse_results[j].end.knownValues;
@@ -108,9 +128,9 @@ app.post('/post/data', function(req, res) {
                 for (var iter = 0; iter < _keys.length; iter++) {
                     d[_keys[iter]] = y[_keys[iter]];
                 }
-                endTime = new Date(d.year, d.month - 1, d.day, d.hour, d.minute, d.second);
+                endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
             } else {
-                endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour + 1, date_dictionary.minute, date_dictionary.second);
+                endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4 + 1, date_dictionary.minute, date_dictionary.second);
             }
 
             var boolAvailable;
@@ -124,57 +144,55 @@ app.post('/post/data', function(req, res) {
             var endStamp = endTime.valueOf();
 
             var details = {
-	                    	"available": boolAvailable,
-	                    	"start": startTime,
-	                    	"end": endTime
-                		};
+                "available": boolAvailable,
+                "start": startTime,
+                "end": endTime
+            };
             var userKeys = Object.keys(userDict);
             for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-            	for (var rangei = userDict[userKeys[usernamei]].length-1; rangei >= 0; rangei--){
-		    		// console.log(rangei);
-		    		// console.log(userKeys[usernamei]);
-		    		var curSet = userDict[userKeys[usernamei]][rangei];
-		    		var startCur = curSet["start"].valueOf();
-		    		var endCur = curSet["end"].valueOf();
-		    		console.log("Adding");
-		    		console.log(startTime, endTime);
-		    		console.log("Override");
-		    		console.log(curSet["start"], curSet["end"]);
-		    		if (startStamp <= startCur && endStamp >= endCur){
-		    			console.log("large period");
-		    			console.log(userDict[userKeys[usernamei]]);
-		    			userDict[userKeys[usernamei]].splice(rangei,1);
+                for (var rangei = userDict[userKeys[usernamei]].length - 1; rangei >= 0; rangei--) {
+                    // console.log(rangei);
+                    // console.log(userKeys[usernamei]);
+                    var curSet = userDict[userKeys[usernamei]][rangei];
+                    var startCur = curSet["start"].valueOf();
+                    var endCur = curSet["end"].valueOf();
+                    console.log("Adding");
+                    console.log(startTime, endTime);
+                    console.log("Override");
+                    console.log(curSet["start"], curSet["end"]);
+                    if (startStamp <= startCur && endStamp >= endCur) {
+                        console.log("large period");
+                        console.log(userDict[userKeys[usernamei]]);
+                        userDict[userKeys[usernamei]].splice(rangei, 1);
 
-		    			console.log(userDict[userKeys[usernamei]]);
-		    			// userDict[userKeys[usernamei]][rangei].deleteObject();
-		    		}
-		    		else if (startStamp > startCur && endStamp < endCur) {
-		    			if (curSet["available"] !== boolAvailable){
-		    				userDict[userKeys[usernamei]].push({
-		    					"available": curSet["available"],
-	                    		"start": new Date(endStamp),
-	                    		"end": curSet["end"]
-		    				});		    				
-		    				userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
-		    			}
-		    		}
-		    		else {
-		    			//if end of current is after the start of previous
-			    		if (endStamp > startCur && startStamp < startCur) {
-			    			userDict[userKeys[usernamei]][rangei]["start"] = new Date(endStamp);
-			    			console.log("end>start");
-			    			console.log(endTime);
-			    		}
-			    		//if start of current is less than end of previous
-			    		if (startStamp < endCur && endStamp > endCur) {
-			    			userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
-			    			console.log("start<end");
-			    			console.log(startTime);
-			    		}
-		    		}
-		    		
+                        console.log(userDict[userKeys[usernamei]]);
+                        // userDict[userKeys[usernamei]][rangei].deleteObject();
+                    } else if (startStamp > startCur && endStamp < endCur) {
+                        if (curSet["available"] !== boolAvailable) {
+                            userDict[userKeys[usernamei]].push({
+                                "available": curSet["available"],
+                                "start": new Date(endStamp),
+                                "end": curSet["end"]
+                            });
+                            userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
+                        }
+                    } else {
+                        //if end of current is after the start of previous
+                        if (endStamp > startCur && startStamp < startCur) {
+                            userDict[userKeys[usernamei]][rangei]["start"] = new Date(endStamp);
+                            console.log("end>start");
+                            console.log(endTime);
+                        }
+                        //if start of current is less than end of previous
+                        if (startStamp < endCur && endStamp > endCur) {
+                            userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
+                            console.log("start<end");
+                            console.log(startTime);
+                        }
+                    }
 
-		    	}
+
+                }
             }
             if (userDict[user_name] === undefined) {
                 userDict[user_name] = [details];
@@ -190,23 +208,40 @@ app.post('/post/data', function(req, res) {
     }
 
     var userKeys = Object.keys(userDict);
-    var newrep = {"data": [], "groups": []};
+    var newrep = {
+        "data": [],
+        "groups": []
+    };
     var counter = 0;
     console.log(userDict);
     for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-    	newrep["groups"].push({"id":usernamei, "content":userKeys[usernamei]})
-    	for (var rangei = 0; rangei < userDict[userKeys[usernamei]].length; rangei++){
-    		console.log(rangei);
-    		console.log(userKeys[usernamei]);
-    		var curSet = userDict[userKeys[usernamei]][rangei];
-    		newrep["data"].push({"id":counter, content:"", "start":String(curSet["start"]), "end":String(curSet["end"]), "group":usernamei, "className":((curSet["available"] == "true") ? "available":"busy")});
-    		counter++;
-    	}
+        newrep["groups"].push({
+            "id": usernamei,
+            "content": userKeys[usernamei]
+        })
+        for (var rangei = 0; rangei < userDict[userKeys[usernamei]].length; rangei++) {
+            console.log(rangei);
+            console.log(userKeys[usernamei]);
+            var curSet = userDict[userKeys[usernamei]][rangei];
+            newrep["data"].push({
+                "id": counter,
+                content: "",
+                "start": String(curSet["start"]),
+                "end": String(curSet["end"]),
+                "group": usernamei,
+                "className": ((curSet["available"] == "true") ? "available" : "busy")
+            });
+            counter++;
+        }
     }
     console.log(newrep);
     res.send(newrep);
 });
 
-// start the server
-app.listen(PORT);
-console.log('Server started! At http://127.0.0.1:' + PORT);
+app.post('/post/location', function(req, res) {
+            var lat = req.body["lat"]
+            var long = req.body["long"]
+            res.send(shop_finder())
+        }
+        // start the server
+        app.listen(PORT); console.log('Server started! At http://127.0.0.1:' + PORT);
