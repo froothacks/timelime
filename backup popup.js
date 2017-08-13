@@ -16471,13 +16471,11 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     "end": endTime
                 };
                 var userKeys = Object.keys(userDict);
-                // var usernamei = user_name;
-                if (userDict[user_name] !== undefined) {
-                // for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-                    for (var rangei = userDict[user_name].length - 1; rangei >= 0; rangei--) {
+                for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
+                    for (var rangei = userDict[userKeys[usernamei]].length - 1; rangei >= 0; rangei--) {
                         // console.log(rangei);
-                        // console.log(user_name);
-                        var curSet = userDict[user_name][rangei];
+                        // console.log(userKeys[usernamei]);
+                        var curSet = userDict[userKeys[usernamei]][rangei];
                         var startCur = curSet["start"].valueOf();
                         var endCur = curSet["end"].valueOf();
                         console.log("Adding");
@@ -16486,30 +16484,30 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                         console.log(curSet["start"], curSet["end"]);
                         if (startStamp <= startCur && endStamp >= endCur) {
                             console.log("large period");
-                            console.log(userDict[user_name]);
-                            userDict[user_name].splice(rangei, 1);
+                            console.log(userDict[userKeys[usernamei]]);
+                            userDict[userKeys[usernamei]].splice(rangei, 1);
 
-                            console.log(userDict[user_name]);
-                            // userDict[user_name][rangei].deleteObject();
+                            console.log(userDict[userKeys[usernamei]]);
+                            // userDict[userKeys[usernamei]][rangei].deleteObject();
                         } else if (startStamp > startCur && endStamp < endCur) {
                             if (curSet["available"] !== boolAvailable) {
-                                userDict[user_name].push({
+                                userDict[userKeys[usernamei]].push({
                                     "available": curSet["available"],
                                     "start": new Date(endStamp),
                                     "end": curSet["end"]
                                 });
-                                userDict[user_name][rangei]["end"] = new Date(startStamp);
+                                userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
                             }
                         } else {
                             //if end of current is after the start of previous
                             if (endStamp > startCur && startStamp < startCur) {
-                                userDict[user_name][rangei]["start"] = new Date(endStamp);
+                                userDict[userKeys[usernamei]][rangei]["start"] = new Date(endStamp);
                                 console.log("end>start");
                                 console.log(endTime);
                             }
                             //if start of current is less than end of previous
                             if (startStamp < endCur && endStamp > endCur) {
-                                userDict[user_name][rangei]["end"] = new Date(startStamp);
+                                userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
                                 console.log("start<end");
                                 console.log(startTime);
                             }

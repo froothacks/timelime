@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.TZ = 'Eastern Daylight Time';
+// process.env.TZ = 'Eastern Daylight Time'
 
 var chrono = require('chrono-node');
 var sentiment = require('sentiment');
@@ -114,7 +114,7 @@ var OVERRIDES = {
                         for (var ite = 0; ite < keys.length; ite++) {
                             date_dictionary[keys[ite]] = date_dictionary_i[keys[ite]];
                         }
-                        var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4, date_dictionary.minute, date_dictionary.second);
+                        var startTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour, date_dictionary.minute, date_dictionary.second);
                         var endTime;
                         if (parse_results[j].end != undefined) {
                             var d = parse_results[j].end.knownValues;
@@ -123,9 +123,9 @@ var OVERRIDES = {
                             for (var iter = 0; iter < _keys.length; iter++) {
                                 d[_keys[iter]] = y[_keys[iter]];
                             }
-                            endTime = new Date(d.year, d.month - 1, d.day, d.hour - 4, d.minute, d.second);
+                            endTime = new Date(d.year, d.month - 1, d.day, d.hour, d.minute, d.second);
                         } else {
-                            endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour - 4 + 1, date_dictionary.minute, date_dictionary.second);
+                            endTime = new Date(date_dictionary.year, date_dictionary.month - 1, date_dictionary.day, date_dictionary.hour + 1, date_dictionary.minute, date_dictionary.second);
                         }
 
                         var boolAvailable;
@@ -144,11 +144,13 @@ var OVERRIDES = {
                             "end": endTime
                         };
                         var userKeys = Object.keys(userDict);
-                        for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
-                            for (var rangei = userDict[userKeys[usernamei]].length - 1; rangei >= 0; rangei--) {
+                        // var usernamei = user_name;
+                        if (userDict[user_name] !== undefined) {
+                            // for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
+                            for (var rangei = userDict[user_name].length - 1; rangei >= 0; rangei--) {
                                 // console.log(rangei);
-                                // console.log(userKeys[usernamei]);
-                                var curSet = userDict[userKeys[usernamei]][rangei];
+                                // console.log(user_name);
+                                var curSet = userDict[user_name][rangei];
                                 var startCur = curSet["start"].valueOf();
                                 var endCur = curSet["end"].valueOf();
                                 console.log("Adding");
@@ -157,30 +159,30 @@ var OVERRIDES = {
                                 console.log(curSet["start"], curSet["end"]);
                                 if (startStamp <= startCur && endStamp >= endCur) {
                                     console.log("large period");
-                                    console.log(userDict[userKeys[usernamei]]);
-                                    userDict[userKeys[usernamei]].splice(rangei, 1);
+                                    console.log(userDict[user_name]);
+                                    userDict[user_name].splice(rangei, 1);
 
-                                    console.log(userDict[userKeys[usernamei]]);
-                                    // userDict[userKeys[usernamei]][rangei].deleteObject();
+                                    console.log(userDict[user_name]);
+                                    // userDict[user_name][rangei].deleteObject();
                                 } else if (startStamp > startCur && endStamp < endCur) {
                                     if (curSet["available"] !== boolAvailable) {
-                                        userDict[userKeys[usernamei]].push({
+                                        userDict[user_name].push({
                                             "available": curSet["available"],
                                             "start": new Date(endStamp),
                                             "end": curSet["end"]
                                         });
-                                        userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
+                                        userDict[user_name][rangei]["end"] = new Date(startStamp);
                                     }
                                 } else {
                                     //if end of current is after the start of previous
                                     if (endStamp > startCur && startStamp < startCur) {
-                                        userDict[userKeys[usernamei]][rangei]["start"] = new Date(endStamp);
+                                        userDict[user_name][rangei]["start"] = new Date(endStamp);
                                         console.log("end>start");
                                         console.log(endTime);
                                     }
                                     //if start of current is less than end of previous
                                     if (startStamp < endCur && endStamp > endCur) {
-                                        userDict[userKeys[usernamei]][rangei]["end"] = new Date(startStamp);
+                                        userDict[user_name][rangei]["end"] = new Date(startStamp);
                                         console.log("start<end");
                                         console.log(startTime);
                                     }
