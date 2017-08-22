@@ -13,6 +13,10 @@ var browserSync = require("browser-sync").create();
 var browserify = require('gulp-browserify');
 
 
+let uglify = require('gulp-uglify-es').default;
+let rename = require("gulp-rename");
+
+
 // config
 var paths = {
   src: {
@@ -110,6 +114,7 @@ gulp.task("scripts", function() {
           debug : false
         }))
         .pipe(browserSync.stream())
+        .pipe(uglify())
         .pipe(gulp.dest(paths.dest.browserify))
         .pipe(notify({
           title: "Success",
