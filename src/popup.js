@@ -1,4 +1,4 @@
-// process.env.TZ = 'Eastern Daylight Time'
+// JavaScript code run when popup is clicked
 
 const chrono = require('chrono-node');
 const sentiment = require('sentiment')
@@ -58,37 +58,13 @@ const OVERRIDES = {
     "out of office": -4
 }
 
-// function successHandler(res) {
-//   console.log(res)
-//   // $("#message").text(JSON.stringify(res))
-
-//   var container = $("#timeline")[0]
-//   var data = new vis.DataSet(res.data)
-//   var groups = new vis.DataSet(res.groups)
-//   var options = {
-//     stack: false,
-//     // start: new Date(),
-//     // end: new Date(7*24*60*60*1000 + (new Date()).valueOf()),
-//     selectable: false,
-//     margin: {
-//       item: 10, // minimal margin between items
-//       axis: 5   // minimal margin between items and the axis
-//     },
-//     orientation: "top"
-//   }
-//   var timeline = new vis.Timeline(container, data, groups, options)
-// }
-
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   var tab = tabs[0]
-  console.log(tab.url, tab.title)
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendMessage(tab.id, {action: "scrape"}, function(req) {
       if (req.action == "scrape") {
-        // $("#message").text(req.messages.length)
         var data = req.messages;
-        // var data = JSON.parse(req.body["messages"]);
-        console.log(data);
+
         var response = {
             "availability": []
         };
@@ -145,24 +121,14 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 var userKeys = Object.keys(userDict);
                 // var usernamei = user_name;
                 if (userDict[user_name] !== undefined) {
-                // for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
                     for (var rangei = userDict[user_name].length - 1; rangei >= 0; rangei--) {
-                        // console.log(rangei);
-                        // console.log(user_name);
+
                         var curSet = userDict[user_name][rangei];
                         var startCur = curSet["start"].valueOf();
                         var endCur = curSet["end"].valueOf();
-                        console.log("Adding");
-                        console.log(startTime, endTime);
-                        console.log("Override");
-                        console.log(curSet["start"], curSet["end"]);
-                        if (startStamp <= startCur && endStamp >= endCur) {
-                            console.log("large period");
-                            console.log(userDict[user_name]);
-                            userDict[user_name].splice(rangei, 1);
 
-                            console.log(userDict[user_name]);
-                            // userDict[user_name][rangei].deleteObject();
+                        if (startStamp <= startCur && endStamp >= endCur) {
+                            userDict[user_name].splice(rangei, 1);
                         } else if (startStamp > startCur && endStamp < endCur) {
                             if (curSet["available"] !== boolAvailable) {
                                 userDict[user_name].push({
@@ -176,14 +142,10 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                             //if end of current is after the start of previous
                             if (endStamp > startCur && startStamp < startCur) {
                                 userDict[user_name][rangei]["start"] = new Date(endStamp);
-                                console.log("end>start");
-                                console.log(endTime);
                             }
                             //if start of current is less than end of previous
                             if (startStamp < endCur && endStamp > endCur) {
                                 userDict[user_name][rangei]["end"] = new Date(startStamp);
-                                console.log("start<end");
-                                console.log(startTime);
                             }
                         }
 
@@ -192,15 +154,10 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 }
                 if (userDict[user_name] === undefined) {
                     userDict[user_name] = [details];
-                    // userRange[user_name] = [[details["start"], ]
                 } else {
                     userDict[user_name].push(details);
                 }
             }
-
-            console.log("dict:");
-            console.log(userDict);
-            console.log(response);
         }
 
         var userKeys = Object.keys(userDict);
@@ -209,15 +166,13 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             "groups": []
         };
         var counter = 0;
-        console.log(userDict);
+
         for (var usernamei = 0; usernamei < userKeys.length; usernamei++) {
             newrep["groups"].push({
                 "id": usernamei,
                 "content": userKeys[usernamei]
             })
             for (var rangei = 0; rangei < userDict[userKeys[usernamei]].length; rangei++) {
-                console.log(rangei);
-                console.log(userKeys[usernamei]);
                 var curSet = userDict[userKeys[usernamei]][rangei];
                 newrep["data"].push({
                     "id": counter,
@@ -230,8 +185,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 counter++;
             }
         }
-        console.log(newrep);
-        // res.send(newrep);
+
         var container = $("#timeline")[0]
         var data = new vis.DataSet(newrep.data)
         var groups = new vis.DataSet(newrep.groups)
@@ -247,8 +201,6 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           orientation: "top"
         }
         var timeline = new vis.Timeline(container, data, groups, options)
-        // console.log(data)
-        // $.post("http://127.0.0.1:9000/post/data", data, successHandler)
       }
     })
   })
