@@ -9,3 +9,5 @@ test/bower_components
 package
 app/scripts
 .idea
+build.crx
+build.pem
