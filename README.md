@@ -5,8 +5,7 @@
 [![Inline docs](http://inch-ci.org/github/froothacks/timelime.svg?branch=master)](http://inch-ci.org/github/froothacks/timelime)
 [![License](https://img.shields.io/github/license/froothacks/timelime.svg?&label=License)](https://github.com/froothacks/timelime/blob/master/LICENSE)
 [![HitCount](https://hitt.herokuapp.com/{froothacks}/{timelime}.svg)](https://github.com/{froothacks}/{timelime})
-(https://img.shields.io/github/contributors/froothacks/timelime.svg)
-
+[![Contributors](https://img.shields.io/github/contributors/froothacks/timelime.svg)](https://github.com/froothacks/timelime)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/froothacks/timelime/issues)
 
 
