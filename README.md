@@ -1,5 +1,5 @@
 # timelime
-
+https://img.shields.io/travis/froothacks/timelime.svg
 [![License](https://img.shields.io/github/license/froothacks/timelime.svg?&label=License)](https://github.com/froothacks/timelime/blob/master/LICENSE)
 
 
