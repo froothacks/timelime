@@ -8,14 +8,11 @@ var pug = require("gulp-pug");
 var sass = require("gulp-sass");
 var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
+// var uglify = require('gulp-uglify');
 var notify = require("gulp-notify");
 var browserSync = require("browser-sync").create();
-var browserify = require('gulp-browserify');
-
-
-let uglify = require('gulp-uglify-es').default;
-let rename = require("gulp-rename");
-
+// var plumber = require('gulp-plumber');
+// var gutil = require("gulp-util");
 
 // config
 var paths = {
@@ -23,15 +20,13 @@ var paths = {
     pug: "src/**/*.pug",
     babel: "src/**/*.js",
     sass: "src/**/*.scss",
-    static: "static/**/*",
-    browserify: "src/popup.js"
+    static: "static/**/*"
   },
-  dest: { 
+  dest: { // 
     html: "build",
     js: "build",
     css: "build",
-    static: "build",
-    browserify: "build"
+    static: "build"
   }
 };
 var browsers = "> 1%, last 2 versions, IE >= 9, Firefox ESR"
@@ -56,7 +51,7 @@ gulp.task("pug", function() {
 });
 
 gulp.task("babel", function() {
-  return gulp.src([paths.src.babel, "!src/**/popup.js"])
+  return gulp.src(paths.src.babel)
     // .pipe(sourcemaps.init())
     .pipe(babel({
       presets: [
@@ -106,29 +101,26 @@ gulp.task("static", function() {
     }));
 });
 
-gulp.task("scripts", function() {
-    // Single entry point to browserify 
-    return gulp.src('src/popup.js')
-        .pipe(browserify({
-          insertGlobals : true,
-          debug : false
-        }))
-        .pipe(browserSync.stream())
-        .pipe(uglify())
-        .pipe(gulp.dest(paths.dest.browserify))
-        .pipe(notify({
-          title: "Success",
-          message: "Browserfied: <%= file.relative %>"
-        }));
-});
-
+// function makeWatcher(fileType) {
+//   console.log(fileType, paths.src[fileType]);
+//   gulp.watch(paths.src[fileType], [fileType])
+//     // Special handler for deleting files
+//     .on("change", (event) => {
+//       if (event.type === 'deleted') {
+//         var srcPath = path.relative(path.resolve(paths.src[fileType]), event.path);
+//         var destPath = path.resolve(paths.dest[fileType], srcPath);
+//         del.sync(destPath);
+//         browserSync.reload()
+//       }
+//     });
+// }
 
 gulp.task("clean", function(done) {
   return del("build/**/*", done);
 });
 
-gulp.task("watch", function() {  
-  gulp.watch(paths.src.browserify, gulp.task("scripts"));
+gulp.task("watch", function() {
+  // ["pug", "babel", "sass", "static"].forEach(makeWatcher);
   gulp.watch(paths.src.pug, gulp.task("pug"));
   gulp.watch(paths.src.babel, gulp.task("babel"));
   gulp.watch(paths.src.sass, gulp.task("sass"));
@@ -145,7 +137,7 @@ gulp.task("sync", function() {
 
 gulp.task("build",
   gulp.series("clean",
-    gulp.parallel("pug", "babel", "sass", "static", "scripts")));
+    gulp.parallel("pug", "babel", "sass", "static")));
 
 gulp.task("default", 
   gulp.series("build", "watch"));
