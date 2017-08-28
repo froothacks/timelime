@@ -1,7 +1,7 @@
 # timelime
 [![Travis](https://img.shields.io/travis/froothacks/timelime.svg)](https://travis-ci.org/froothacks/timelime)
 [![Dependencies Status](https://david-dm.org/froothacks/timelime.svg)](https://david-dm.org/froothacks/timelime)
-[![devDependencies Status](https://david-dm.org/dwyl/froothacks/timelime.svg)](https://david-dm.org/froothacks/timelime?type=dev)
+[![devDependencies Status](https://david-dm.org/dwyl/froothacks/timelime/dev-status.svg)](https://david-dm.org/froothacks/timelime?type=dev)
 https://david-dm.org/froothacks/timelime?type=dev
 
 [![License](https://img.shields.io/github/license/froothacks/timelime.svg?&label=License)](https://github.com/froothacks/timelime/blob/master/LICENSE)
