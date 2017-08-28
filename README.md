@@ -2,6 +2,7 @@
 [![Travis](https://img.shields.io/travis/froothacks/timelime.svg)](https://travis-ci.org/froothacks/timelime)
 [![Dependencies](https://david-dm.org/froothacks/timelime.svg)](https://github.com/froothacks/timelime/blob/master/package.json)
 [![License](https://img.shields.io/github/license/froothacks/timelime.svg?&label=License)](https://github.com/froothacks/timelime/blob/master/LICENSE)
+[![HitCount](https://hitt.herokuapp.com/{froothacks}/{timelime}.svg)](https://github.com/{froothacks}/{timelime})
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
 
