@@ -1,4 +1,6 @@
 language: node_js
 node_js:
-  - "iojs"
-  - "7"
+  - "6.11.2"
+before_install:
+  - npm install
+  - npm install --only=dev
