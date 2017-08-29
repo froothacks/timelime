@@ -5,7 +5,6 @@
 [![codebeat badge](https://codebeat.co/badges/6d8c5e9a-42af-4c85-a819-61c8a2aa1def)](https://codebeat.co/projects/github-com-froothacks-timelime-master)
 [![Inline docs](http://inch-ci.org/github/froothacks/timelime.svg?branch=master)](http://inch-ci.org/github/froothacks/timelime)
 [![License](https://img.shields.io/github/license/froothacks/timelime.svg?&label=License)](https://github.com/froothacks/timelime/blob/master/LICENSE)
-[![Download Count](https://img.shields.io/github/downloads/froothacks/timelime/total.svg)](https://github.com/froothacks/timelime)
 [![Hit Count](https://hitt.herokuapp.com/froothacks/timelime.svg)](https://github.com/froothacks/timelime)
 [![Contributors](https://img.shields.io/github/contributors/froothacks/timelime.svg)](https://github.com/froothacks/timelime)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/froothacks/timelime/issues)
