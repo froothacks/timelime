@@ -8,7 +8,13 @@
     "persistent": false
   },
   "content_scripts": [
-    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.2.1.min.js", "scraper.js"] }
+    {
+      "matches": [
+        "http://*.messenger.com/*",
+        "https://*.messenger.com/*"
+      ],
+      "js": ["jquery-3.2.1.min.js", "scraper.js"]
+    }
   ],
   "page_action": {
     "default_icon": "timelime64.png",
@@ -19,12 +25,12 @@
     "activeTab",
     "declarativeContent",
     "tabs",
-    "<all_urls>",
-    "http://127.0.0.1/*"
+    "http://*.messenger.com/*",
+    "https://*.messenger.com/*"
   ],
   "icons": { 
-    "16": "timelime16.png",           
+    "16": "timelime16.png",
     "48": "timelime48.png",
-    "128": "timelime128.png" 
+    "128": "timelime128.png"
   }
 }
