@@ -11,7 +11,7 @@
     { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.2.1.min.js", "scraper.js"] }
   ],
   "page_action": {
-    "default_icon": "icon-64.png",
+    "default_icon": "timelime64.png",
     "default_title": "Timelime",
     "default_popup": "popup.html"
   },
@@ -23,8 +23,8 @@
     "http://127.0.0.1/*"
   ],
   "icons": { 
-    "16": "icon16.png",           
-    "48": "icon48.png",
-    "128": "icon128.png" 
+    "16": "timelime16.png",           
+    "48": "timelime48.png",
+    "128": "timelime128.png" 
   }
 }
