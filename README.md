@@ -10,7 +10,6 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/froothacks/timelime/issues)
 
 
-
 [![GitHub stars](https://img.shields.io/github/stars/froothacks/timelime.svg?style=social&label=Star)](https://github.com/froothacks/timelime)
 [![GitHub watchers](https://img.shields.io/github/watchers/froothacks/timelime.svg?style=social&label=Watch)](https://github.com/froothacks/timelime)
 [![GitHub forks](https://img.shields.io/github/forks/froothacks/timelime.svg?style=social&label=Fork)](https://github.com/froothacks/timelime)
