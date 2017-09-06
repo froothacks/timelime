@@ -24,7 +24,6 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "tabs",
     "http://*.messenger.com/*",
     "https://*.messenger.com/*"
   ],

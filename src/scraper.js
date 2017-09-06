@@ -19,16 +19,13 @@ function scrape() {
   return messages
 }
 
-window.onload = function() {
-  chrome.runtime.onMessage.addListener(function(req, _, sendResponse) {
-    if (req.action == "scrape") {
-      var messages = scrape()
-      console.log(messages)
-      sendResponse({
-        action: "scrape",
-        messages: messages
-      })
-    }
-  })
-}
-
+chrome.runtime.onMessage.addListener(function(req, _, sendResponse) {
+  if (req.action == "scrape") {
+    var messages = scrape()
+    console.log(messages)
+    sendResponse({
+      action: "scrape",
+      messages: messages
+    })
+  }
+})
