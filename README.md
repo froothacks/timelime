@@ -7,11 +7,6 @@ Scheduling meetings through instant messaging applications was almost impossible
 
 - A: Hey, you guys want to meet up sometime? 
 - B: Sure, I am available from 5 pm to 8 pm! 
-- B: Hey, have you heard about the new Drake album that just came out?
-- A: Yo, it's lit!
-- B: Yeah, I just replayed it 50 times in a row!
-- A: We gotta get together sometime and sing those songs!
-- B: For sure!
 - A: What about you, C?
 - C: I'll be busy from 5 pm to 6 pm!
 - A: I think 7 pm sounds good!
