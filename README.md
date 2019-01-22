@@ -1,8 +1,6 @@
 # timelime
 
-[![GitHub stars](https://img.shields.io/github/stars/froothacks/timelime.svg?style=social&label=Star)](https://github.com/froothacks/timelime)
-[![GitHub watchers](https://img.shields.io/github/watchers/froothacks/timelime.svg?style=social&label=Watch)](https://github.com/froothacks/timelime)
-[![GitHub forks](https://img.shields.io/github/forks/froothacks/timelime.svg?style=social&label=Fork)](https://github.com/froothacks/timelime)
+![Screenshot of timelime in action](/docs/timelime.jpg)
 
 ## Inspiration
 Scheduling meetings through instant messaging applications was almost impossible. Relevant messages for meeting planning got buried under irrelevant messages. For example, when attempting to get a group of friends together for a meet-up the conversation would be similar to the following:
